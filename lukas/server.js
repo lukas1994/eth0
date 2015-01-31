@@ -80,6 +80,8 @@ client.on('data',function(data){
       var DELTA = 1;
       var AMOUNT = 100;
 
+      console.log(buy_corge, (0.3*sell_foo + 0.7*sell_bar));
+
       if (buy_corge < (0.3*sell_foo + 0.7*sell_bar)) {
         buy('CORGE', buy_corge, AMOUNT);
         sell('FOO', sell_foo, Math.floor(0.3*AMOUNT));
