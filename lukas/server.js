@@ -113,20 +113,18 @@ client.on('data',function(data){
     foo.sell = foo.sell.map(function(o) {return o[0];});
     bar.sell = bar.sell.map(function(o) {return o[0];});*/
 
-    var buy_corge = corge.buy.min()+1;
-    var buy_foo = foo.buy.min()+1;
-    var buy_bar = bar.buy.min()+1;
+    var buy_corge = corge.sell.min()+1;
+    var buy_foo = foo.sell.min()+1;
+    var buy_bar = bar.sell.min()+1;
 
-    var sell_corge = corge.sell.max()-1;
-    var sell_foo = foo.sell.max()-1;
-    var sell_bar = bar.sell.max()-1;
+    var sell_corge = corge.buy.max()-1;
+    var sell_foo = foo.buy.max()-1;
+    var sell_bar = bar.buy.max()-1;
 
     var DELTA = 1;
     var AMOUNT = 100;
 
-    console.log(buy_corge, (0.3*sell_foo + 0.8*sell_bar));
-
-    if (!done) {
+    //if (!done) {
       if (buy_corge+100 < (0.3*sell_foo + 0.8*sell_bar)) {
         convert('SELL', AMOUNT);
 
@@ -145,7 +143,7 @@ client.on('data',function(data){
 
         done = true;
       }
-    }
+    //}
   } 
 	
 });
