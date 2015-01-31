@@ -24,6 +24,7 @@ if (process.argv.length == 4) {
 var client = new net.Socket();
 
 client.on('data',function(data){
+  console.log('now');
   //clean trades
   for (var id in trades) {
     try {
@@ -123,21 +124,21 @@ client.on('data',function(data){
   }
 
 	
-})
+});
 
 client.on('closed',function(){
   console.log('closed');
-})
+});
 
 client.on('error',function(error){
   console.log('error');
-})
+});
 
 client.connect(c.port,c.host,function(){
 	console.log('connected');
 	
   hello();
-})
+});
 
 // Return the correct JSON messages
 var execute = function(o) {
