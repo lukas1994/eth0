@@ -69,6 +69,10 @@ client.on('data',function(data){
 
     // strategy
     var corge = books['CORGE'], foo = books['FOO'], bar = books['BAR'];
+    for (sym in books) {
+      books[sym].buy = books[sym].buy.map(function(o) {return o[0];});
+      books[sym].sell = books[sym].sell.map(function(o) {return o[0];});
+    }
     if (corge && foo && bar) {
           console.log('IN');
 
@@ -76,9 +80,9 @@ client.on('data',function(data){
       var buy_foo = foo.buy.min()+1;
       var buy_bar = bar.buy.min()+1;
 
-      var sell_corge = corge.buy.max()-1;
-      var sell_foo = foo.buy.max()-1;
-      var sell_bar = bar.buy.max()-1;
+      var sell_corge = corge.sell.max()-1;
+      var sell_foo = foo.sell.max()-1;
+      var sell_bar = bar.sell.max()-1;
 
       var DELTA = 1;
       var AMOUNT = 100;
