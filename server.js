@@ -5,6 +5,7 @@ request({
 	method: 'POST',
 	json: {"type": "hello", "team": "LGP"},
 	callback: function(err, res, body) {
+		console.log(error)
 		console.log(res)
 	}
 })
