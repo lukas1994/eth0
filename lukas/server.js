@@ -129,6 +129,9 @@ client.on('data',function(data){
       bar.sell = bar.sell.map(function(o) {return o[0];});*/
 
       var DELTA = 2;
+      var AMOUNT = 50;
+      var WIN = 10;
+
       var buy_corge = corge.sell.min()+DELTA;
       var buy_foo = foo.sell.min()+DELTA;
       var buy_bar = bar.sell.min()+DELTA;
@@ -136,10 +139,6 @@ client.on('data',function(data){
       var sell_corge = corge.buy.max()-DELTA;
       var sell_foo = foo.buy.max()-DELTA;
       var sell_bar = bar.buy.max()-DELTA;
-
-      
-      var AMOUNT = 10;
-      var WIN = 10;
 
       console.log(buy_corge*AMOUNT+100, (0.3*sell_foo + 0.8*sell_bar)*AMOUNT);
 
