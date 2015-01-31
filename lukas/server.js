@@ -15,6 +15,7 @@ Array.prototype.min = function() {
 var trades = {};
 var books = {};
 var portfolio = {};
+var done = false;
 
 // Command line arguments override defaults
 if (process.argv.length == 4) {
@@ -112,10 +113,7 @@ client.on('data',function(data){
     foo.sell = foo.sell.map(function(o) {return o[0];});
     bar.sell = bar.sell.map(function(o) {return o[0];});*/
 
-    console.log(corge.buy)
     var buy_corge = corge.buy.min()+1;
-    console.log('min: ' + buy_corge);
-
     var buy_foo = foo.buy.min()+1;
     var buy_bar = bar.buy.min()+1;
 
@@ -128,19 +126,25 @@ client.on('data',function(data){
 
     console.log(buy_corge, (0.3*sell_foo + 0.8*sell_bar));
 
-    if (buy_corge+100 < (0.3*sell_foo + 0.8*sell_bar)) {
-      convert('SELL', AMOUNT);
+    if (!done) {
+      if (buy_corge+100 < (0.3*sell_foo + 0.8*sell_bar)) {
+        convert('SELL', AMOUNT);
 
-      buy('CORGE', buy_corge, AMOUNT);
-      sell('FOO', sell_foo, Math.floor(0.3*AMOUNT));
-      sell('BAR', sell_bar, Math.floor(0.8*AMOUNT));
-    }
-    if ((0.3*buy_foo + 0.8*buy_bar)+100 < sell_corge) {
-      convert('BUY', AMOUNT);
+        buy('CORGE', buy_corge, AMOUNT);
+        sell('FOO', sell_foo, Math.floor(0.3*AMOUNT));
+        sell('BAR', sell_bar, Math.floor(0.8*AMOUNT));
 
-      sell('CORGE', buy_corge, AMOUNT);
-      buy('FOO', sell_foo, Math.floor(0.3*AMOUNT));
-      buy('BAR', sell_bar, Math.floor(0.8*AMOUNT));
+        done = true;
+      }
+      if ((0.3*buy_foo + 0.8*buy_bar)+100 < sell_corge) {
+        convert('BUY', AMOUNT);
+
+        sell('CORGE', buy_corge, AMOUNT);
+        buy('FOO', sell_foo, Math.floor(0.3*AMOUNT));
+        buy('BAR', sell_bar, Math.floor(0.8*AMOUNT));
+
+        done = true;
+      }
     }
   } 
 	
