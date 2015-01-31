@@ -29,13 +29,13 @@ var client = new net.Socket();
 client.on('data',function(data){
   console.log('now');
   //clean trades
-  for (var id in trades) {
+  /*for (var id in trades) {
     try {
       if (Date.now() - trades[id].time > 2000) {
         cancel(id);
       }
     } catch(e) {}
-  }
+  }*/
 
 	var lines = data.toString().split("\n");
 	for (var i = 0; i < lines.length; i++){
@@ -101,51 +101,65 @@ client.on('data',function(data){
   }
   //console.dir(books);
   var corge = myBooks['CORGE'], foo = myBooks['FOO'], bar = myBooks['BAR'];
-  if (corge && foo && bar) {
 
-    /*corge.buy = corge.buy.map(function(o) {return o[0];});
-    foo.buy = foo.buy.map(function(o) {return o[0];});
-    bar.buy = bar.buy.map(function(o) {return o[0];});
 
-    corge.sell = corge.sell.map(function(o) {return o[0];});
-    foo.sell = foo.sell.map(function(o) {return o[0];});
-    bar.sell = bar.sell.map(function(o) {return o[0];});*/
+  // sell
+  /*if (portfolio['CORGE'] > 500) {
+    sell('CORGE', buy_corge, AMOUNT);
+  }*/
+  if(true) {
 
-    var DELTA = 0;
-    var buy_corge = corge.sell.min()+DELTA;
-    var buy_foo = foo.sell.min()+DELTA;
-    var buy_bar = bar.sell.min()+DELTA;
-
-    var sell_corge = corge.buy.max()-DELTA;
-    var sell_foo = foo.buy.max()-DELTA;
-    var sell_bar = bar.buy.max()-DELTA;
-
-    
-    var AMOUNT = 10;
-
-    console.log(buy_corge*AMOUNT+100, (0.3*sell_foo + 0.8*sell_bar)*AMOUNT);
-
-    //if (!done) {
-      if (buy_corge*AMOUNT+100 < (0.3*sell_foo + 0.8*sell_bar)*AMOUNT) {
-        convert('SELL', AMOUNT);
-
-        buy('CORGE', buy_corge, AMOUNT);
-        sell('FOO', sell_foo, Math.floor(0.3*AMOUNT));
-        sell('BAR', sell_bar, Math.floor(0.8*AMOUNT));
-
-        done = true;
+        if (corge && foo && bar) {
+      for (var id in trades) {
+        try {
+          cancel(id);
+        } catch(e) {}
       }
-      if ((0.3*buy_foo + 0.8*buy_bar)*AMOUNT+100 < sell_corge*AMOUNT) {
-        convert('BUY', AMOUNT);
 
-        sell('CORGE', buy_corge, AMOUNT);
-        buy('FOO', sell_foo, Math.floor(0.3*AMOUNT));
-        buy('BAR', sell_bar, Math.floor(0.8*AMOUNT));
+      /*corge.buy = corge.buy.map(function(o) {return o[0];});
+      foo.buy = foo.buy.map(function(o) {return o[0];});
+      bar.buy = bar.buy.map(function(o) {return o[0];});
 
-        done = true;
-      }
-    //}
-  } 
+      corge.sell = corge.sell.map(function(o) {return o[0];});
+      foo.sell = foo.sell.map(function(o) {return o[0];});
+      bar.sell = bar.sell.map(function(o) {return o[0];});*/
+
+      var DELTA = 0;
+      var buy_corge = corge.sell.min()+DELTA;
+      var buy_foo = foo.sell.min()+DELTA;
+      var buy_bar = bar.sell.min()+DELTA;
+
+      var sell_corge = corge.buy.max()-DELTA;
+      var sell_foo = foo.buy.max()-DELTA;
+      var sell_bar = bar.buy.max()-DELTA;
+
+      
+      var AMOUNT = 10;
+
+      console.log(buy_corge*AMOUNT+100, (0.3*sell_foo + 0.8*sell_bar)*AMOUNT);
+
+      //if (!done) {
+        if (buy_corge*AMOUNT+100 < (0.3*sell_foo + 0.8*sell_bar)*AMOUNT) {
+          convert('SELL', AMOUNT);
+
+          buy('CORGE', buy_corge, AMOUNT);
+          sell('FOO', sell_foo, Math.floor(0.3*AMOUNT));
+          sell('BAR', sell_bar, Math.floor(0.8*AMOUNT));
+
+          done = true;
+        }
+        if ((0.3*buy_foo + 0.8*buy_bar)*AMOUNT+100 < sell_corge*AMOUNT) {
+          convert('BUY', AMOUNT);
+
+          sell('CORGE', sell_corge, AMOUNT);
+          buy('FOO', buy_foo, Math.floor(0.3*AMOUNT));
+          buy('BAR', buy_bar, Math.floor(0.8*AMOUNT));
+
+          done = true;
+        }
+      //}
+    } 
+  }
 	
 });
 
