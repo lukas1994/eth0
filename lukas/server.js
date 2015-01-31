@@ -114,11 +114,11 @@ client.on('data',function(data){
   if(true) {
 
     if (corge && foo && bar) {
-      for (var id in trades) {
+      /*for (var id in trades) {
         try {
           cancel(id);
         } catch(e) {}
-      }
+      }*/
 
       /*corge.buy = corge.buy.map(function(o) {return o[0];});
       foo.buy = foo.buy.map(function(o) {return o[0];});
@@ -128,7 +128,7 @@ client.on('data',function(data){
       foo.sell = foo.sell.map(function(o) {return o[0];});
       bar.sell = bar.sell.map(function(o) {return o[0];});*/
 
-      var DELTA = 0;
+      var DELTA = 2;
       var buy_corge = corge.sell.min()+DELTA;
       var buy_foo = foo.sell.min()+DELTA;
       var buy_bar = bar.sell.min()+DELTA;
@@ -139,11 +139,12 @@ client.on('data',function(data){
 
       
       var AMOUNT = 10;
+      var WIN = 10;
 
       console.log(buy_corge*AMOUNT+100, (0.3*sell_foo + 0.8*sell_bar)*AMOUNT);
 
       //if (!done) {
-        if (buy_corge*AMOUNT+100 < (0.3*sell_foo + 0.8*sell_bar)*AMOUNT) {
+        if ((0.3*sell_foo + 0.8*sell_bar)*AMOUNT - (buy_corge*AMOUNT+100) > WIN) {
           convert('SELL', AMOUNT);
 
           buy('CORGE', buy_corge, AMOUNT);
@@ -156,7 +157,7 @@ client.on('data',function(data){
           }, 1000);
 
         }
-        if ((0.3*buy_foo + 0.8*buy_bar)*AMOUNT+100 < sell_corge*AMOUNT) {
+        if ((sell_corge*AMOUNT - ((0.3*buy_foo + 0.8*buy_bar)*AMOUNT+100) > WIN) {
           convert('BUY', AMOUNT);
 
           sell('CORGE', sell_corge, AMOUNT);
@@ -179,7 +180,7 @@ client.on('closed',function(){
 });
 
 client.on('error',function(error){
-  console.log('error');
+  console.log('error: ' + error);
 });
 
 client.connect(c.port,c.host,function(){
