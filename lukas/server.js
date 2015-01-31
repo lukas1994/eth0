@@ -149,7 +149,7 @@ client.on('data',function(data){
           pause = true;
           setTimeout(function() {
             pause = false;
-          }, 500);
+          }, 100);
 
         }
         if (sell_corge*AMOUNT - ((0.3*buy_foo + 0.8*buy_bar)*AMOUNT+100) > WIN) {
