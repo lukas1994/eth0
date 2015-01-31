@@ -30,12 +30,12 @@ client.on('data',function(data){
       if (Date.now() - trades[id].time > 5000) {
         cancel(id);
       }
-    } catch() {}
+    } catch(e) {}
   }
 
 	var lines = data.toString().split("\n");
 	for (var i = 0; i < lines.length; i++){
-  	try{
+  	try {
       var line = JSON.parse(lines[i]);
 
       if (line.type == 'book') {
@@ -65,7 +65,7 @@ client.on('data',function(data){
         //console.log("%d, %d",lines[i].price,lines[i].size)
       }
     }
-  	catch(e){
+  	catch(e) {
       console.log('caught ERROR');
     }
   }
