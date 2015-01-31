@@ -111,7 +111,7 @@ client.on('data',function(data){
     foo.sell = foo.sell.map(function(o) {return o[0];});
     bar.sell = bar.sell.map(function(o) {return o[0];});*/
 
-    var DELTA = 15;
+    var DELTA = 5;
     var buy_corge = corge.sell.min()+DELTA;
     var buy_foo = foo.sell.min()+DELTA;
     var buy_bar = bar.sell.min()+DELTA;
