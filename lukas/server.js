@@ -94,8 +94,8 @@ client.on('data',function(data){
   }*/
 
     var DELTA = 2;
-    var AMOUNT = 60;
-    var WIN = 10;
+    var AMOUNT = 100;
+    var WIN = 20;
     var THRESH = 10;
 
     if (corge && foo && bar) {
