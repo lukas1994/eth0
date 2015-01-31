@@ -25,7 +25,7 @@ var client = new net.Socket();
 
 client.on('data',function(data){
   //clean trades
-  for (id in trades) {
+  for (var id in trades) {
     if (Date.now() - trades[id].time > 5000) {
       cancel(id);
     }
@@ -69,16 +69,20 @@ client.on('data',function(data){
 
     // strategy
     var corge = books['CORGE'], foo = books['FOO'], bar = books['BAR'];
+    for (var sym in books) {
+      books[sym].buy = books[sym].buy.map(function(o) {return o[0];});
+      books[sym].sell = books[sym].sell.map(function(o) {return o[0];});
+    }
     if (corge && foo && bar) {
           console.log('IN');
 
-      corge.buy = corge.buy.map(function(o) {return o[0];});
+      /*corge.buy = corge.buy.map(function(o) {return o[0];});
       foo.buy = foo.buy.map(function(o) {return o[0];});
       bar.buy = bar.buy.map(function(o) {return o[0];});
 
       corge.sell = corge.sell.map(function(o) {return o[0];});
       foo.sell = foo.sell.map(function(o) {return o[0];});
-      bar.sell = bar.sell.map(function(o) {return o[0];});
+      bar.sell = bar.sell.map(function(o) {return o[0];});*/
 
       var buy_corge = corge.buy.min()+1;
       var buy_foo = foo.buy.min()+1;
