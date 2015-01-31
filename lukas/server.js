@@ -26,9 +26,11 @@ var client = new net.Socket();
 client.on('data',function(data){
   //clean trades
   for (var id in trades) {
-    if (Date.now() - trades[id].time > 5000) {
-      cancel(id);
-    }
+    try {
+      if (Date.now() - trades[id].time > 5000) {
+        cancel(id);
+      }
+    } catch() {}
   }
 
 	var lines = data.toString().split("\n");
