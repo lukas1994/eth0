@@ -89,11 +89,8 @@ client.on('data',function(data){
     }
     for (var i = 0; i < books[sym].sell; i++)
       books[sym].sell[i] = parseInt(books[sym].sell[i][0]);*/
-    console.log(books[sym]);
     books[sym].buy = books[sym].buy.map(function(o) {return parseInt(o[0]);});
     books[sym].sell = books[sym].sell.map(function(o) {return parseInt(o[0]);});
-    console.log(books[sym]);
-    process.exit(0);
   }
   //console.dir(books);
   var corge = books['CORGE'], foo = books['FOO'], bar = books['BAR'];
@@ -109,7 +106,10 @@ client.on('data',function(data){
     foo.sell = foo.sell.map(function(o) {return o[0];});
     bar.sell = bar.sell.map(function(o) {return o[0];});*/
 
+    console.log(corge.buy)
     var buy_corge = corge.buy.min()+1;
+    console.log('min: ' + buy_corge);
+    
     var buy_foo = foo.buy.min()+1;
     var buy_bar = bar.buy.min()+1;
 
