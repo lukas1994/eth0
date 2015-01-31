@@ -26,7 +26,10 @@ console.log(c.host, c.port);
 
 var client = new net.Socket();
 
+var pause = false;
+
 client.on('data',function(data){
+  if (pause) return;
   console.log('now');
   //clean trades
   /*for (var id in trades) {
@@ -110,8 +113,7 @@ client.on('data',function(data){
   }*/
   if(true) {
 
-        if (corge && foo && bar) {
-          console.log('CANCEL', Object.keys(trades).length);
+    if (corge && foo && bar) {
       for (var id in trades) {
         try {
           cancel(id);
@@ -148,7 +150,11 @@ client.on('data',function(data){
           sell('FOO', sell_foo, Math.floor(0.3*AMOUNT));
           sell('BAR', sell_bar, Math.floor(0.8*AMOUNT));
 
-          done = true;
+          pause = true;
+          setTimeout(function() {
+            pause = false;
+          }, 1000);
+
         }
         if ((0.3*buy_foo + 0.8*buy_bar)*AMOUNT+100 < sell_corge*AMOUNT) {
           convert('BUY', AMOUNT);
@@ -157,7 +163,10 @@ client.on('data',function(data){
           buy('FOO', buy_foo, Math.floor(0.3*AMOUNT));
           buy('BAR', buy_bar, Math.floor(0.8*AMOUNT));
 
-          done = true;
+          pause = true;
+          setTimeout(function() {
+            pause = false;
+          }, 1000);
         }
       //}
     } 
