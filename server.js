@@ -1,18 +1,39 @@
 var net = require('net')
-var pennyingStrategy = require('./pennying.js')
+var strategy = require('./pennying.js').strategy
 var c = require('./constants.js')
-var nextOrderId = 0
-var canTrade = false
 
-var pennying = {
+/* State */
+var nextOrderId = 0
+var openOrders = []
+var positions = {
+  BAR: 0,
+  BAZ: 0,
+  FOO: 0,
+  QUUX: 0,
+  CORGE: 0
+}
+var book = {
+  BAR: { sell: null, buy: null },
+  BAZ: { sell: null, buy: null },
+  FOO: { sell: null, buy: null },
+  QUUX: { sell: null, buy: null },
+  CORGE: { sell: null, buy: null }
+}
+var canTrade = false
+var cash = 0
+
+
+
+var maxMin = {
+  // max buy, min sell
   BAR: [0,Infinity],
   BAZ: [0,Infinity],
   FOO: [0,Infinity],
   QUUX: [0,Infinity],
   CORGE: [0,Infinity]
 }
+var pennyingVal = .25
 
-var lines = []
 
 // Command line arguments override defaults
 if (process.argv.length == 4){
@@ -25,21 +46,52 @@ var client = new net.Socket()
 client.on('data',function(data){
 	lines = data.toString().split("\n")
 	for (var i = 0; i < lines.length; i++){
-  	try{ lines[i] = JSON.parse(lines[i])}
+  	var line
+  	try{ line = JSON.parse(lines[i]) }
   	catch(e){}
-  	if (lines[i].type == 'book'){
-  	  for (var i = 0; i < book.buy.length; i++){
-    	  pennying[book.symbol][0] = Math.max(pennying[book.symbol][0],book.buy[i].)
-    	  
-  	  }    	
-  	}
-    else if (lines[i].type == 'hello'){
-      canTrade = lines[i].market_open
-      client.write(JSON.stringify(sell('BAR',1,10))+'\n')     
+  	
+  	if (line.type == 'hello'){
+      canTrade = line.market_open
+      cash = line.cash
+      for (var i = 0; i < line.symbols.length; i++)
+        positions[line.symbols[i].symbol] = line.symbols[i].position
     }
-    else if (lines[i].type == 'trade' && lines[i].symbol == 'BAR')
-      console.log("%d, %d",lines[i].price,lines[i].size)
-	}
+    else if (line.type == 'book'){
+  	  book[line.symbol].buy = line.buy
+  	  book[line.symbol].sell = line.sell
+	  } 
+    else if (line.type == 'market_open')
+      canTrade = line.open 
+    else if (line.type == 'error')
+      console.log(line.error)
+    else if (line.type == 'trade'){
+      strategy.
+    }
+    else if (line.type == 'ack')
+      openOrders.push(line.order_id)
+    else if (line.type == 'reject')
+      console.log("Rejected order %d: %s",line.order_id,line.error)
+    else if (line.type == 'fill'){
+      if (line.dir == 'BUY'){
+        cash -= line.price
+        positions[line.symbol] += line.size
+      }
+      else {
+        cash += line.price
+        positions[line.symbol] -= line.size
+      }
+    }
+    else if (line.type == 'out'){
+        curren
+    }
+  }
+	
+	
+	
+	
+{"type":"trade","symbol":"SYM","price":N,"size":N}
+{"type":"fill","order_id":N,"symbol":"SYM","dir":"BUY","price":N,"size":N}
+{"type":"out","order_id":N}
 })
 
 client.on('closed',function(){
@@ -69,19 +121,19 @@ var sell = function(symbol, price, size){
 }
 
 var add = function(direction, symbol, price, size){
-	return { 
+	return client.write(JSON.stringify({ 
 			"type": "add",
 			"order_id": nextOrderId++,
 			"symbol": symbol,
 			"dir": direction, 
 			"price": price, 
 			"size": size
-		}
+		}) + "\n" )
 }
 
 var cancel = function(orderID){
-	return {
+	return client.write(JSON.stringify({
 		"type": "cancel",
 		"order_id": orderID
-	}
+		}) + "\n" )
 }
