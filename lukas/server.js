@@ -21,6 +21,7 @@ if (process.argv.length == 4) {
 	c.host = process.argv[2];
 	c.port = parseInt(process.argv[3]) + 25000;
 }
+console.log(c.host, c.port);
 
 var client = new net.Socket();
 
