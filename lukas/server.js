@@ -96,7 +96,7 @@ client.on('data',function(data){
     var DELTA = 2;
     var AMOUNT = 60;
     var WIN = 15;
-    var THRESH = 50;
+    var THRESH = 40;
 
     if (corge && foo && bar) {
       var myTrades = clone(trades);
@@ -106,14 +106,14 @@ client.on('data',function(data){
           var trade = myTrades[id];
           if (trade.invalid) continue;
           if (trade.dir == 'BUY') {
-            if (trade.price + THRESH < myBooks[trade.symbol].buy) {
+            if (Math.abs(trade.price - myBooks[trade.symbol].buy) > THRESH) {
               cancel(id);
               trades[id].invalid = true;
               buy(trade.symbol, myBooks[trade.symbol].buy + DELTA, trade.size);
             }
           }
           else if (trade.dir == 'SELL') {
-            if (trade.price - THRESH > myBooks[trade.symbol].sell) {
+            if (Math.abs(trade.price - myBooks[trade.symbol].sell) > THRESH) {
               cancel(id);
               trades[id].invalid = true;
               sell(trade.symbol, myBooks[trade.symbol].sell - DELTA, trade.size);
