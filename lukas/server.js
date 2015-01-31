@@ -61,6 +61,7 @@ client.on('data',function(data){
           portfolio[line.symbol] -= line.size;
       }
       else if (line.type == 'out') {
+        console.log('OUT');
         trades[line.order_id] = undefined;
       }
       else if (line.type == 'hello'){
@@ -110,6 +111,7 @@ client.on('data',function(data){
   if(true) {
 
         if (corge && foo && bar) {
+          console.log('CANCEL', Object.keys(trades).length);
       for (var id in trades) {
         try {
           cancel(id);
@@ -226,7 +228,6 @@ var convert = function(dir, size) {
 };
 
 var cancel = function(orderID){
-  console.log('CANCEL');
 	return execute({
 		"type": "cancel",
 		"order_id": orderID
