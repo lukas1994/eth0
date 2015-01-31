@@ -133,12 +133,14 @@ client.on('data',function(data){
           if (trade.dir == 'BUY') {
             if (trade.price + THRESH < myBooks[trade.symbol].buy) {
               cancel(id);
+              delete trades[id];
               buy(trade.symbol, myBooks[trade.symbol].buy + DELTA, trade.size);
             }
           }
           else if (trade.dir == 'SELL') {
             if (trade.price - THRESH > myBooks[trade.symbol].sell) {
               cancel(id);
+              delete trades[id];
               sell(trade.symbol, myBooks[trade.symbol].sell - DELTA, trade.size);
             }
           }
