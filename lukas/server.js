@@ -197,6 +197,7 @@ var add = function(direction, symbol, price, size){
 };
 
 var convert = function(dir, size) {
+  console.log('convert');
   return execute({
     "type": "convert",
     "order_id": nextOrderId++,
