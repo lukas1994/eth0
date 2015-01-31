@@ -60,7 +60,7 @@ client.on('data',function(data){
         }
       }
       else if (line.type == 'trade')
-        console.log("%d, %d",lines[i].price,lines[i].size)
+        //console.log("%d, %d",lines[i].price,lines[i].size)
       }
   	catch(e){
       console.log('caught ERROR');
@@ -69,6 +69,8 @@ client.on('data',function(data){
     // strategy
     var corge = books['CORGE'], foo = books['FOO'], bar = books['BAR'];
     if (corge && foo && bar) {
+          console.log('IN');
+
       var buy_corge = corge.buy.min()+1;
       var buy_foo = foo.buy.min()+1;
       var buy_bar = bar.buy.min()+1;
