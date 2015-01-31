@@ -100,8 +100,8 @@ client.on('data',function(data){
     }
     for (var i = 0; i < books[sym].sell; i++)
       books[sym].sell[i] = parseInt(books[sym].sell[i][0]);*/
-    myBooks[sym].buy = myBooks[sym].buy.map(function(o) {return o[0];});
-    myBooks[sym].sell = myBooks[sym].sell.map(function(o) {return o[0];});
+    myBooks[sym].buy = myBooks[sym].sell.map(function(o) {return o[0];}).min();
+    myBooks[sym].sell = myBooks[sym].buy.map(function(o) {return o[0];}).max();
   }
   //console.dir(books);
   var corge = myBooks['CORGE'], foo = myBooks['FOO'], bar = myBooks['BAR'];
@@ -113,12 +113,29 @@ client.on('data',function(data){
   }*/
   if(true) {
 
+    var DELTA = 2;
+      var AMOUNT = 50;
+      var WIN = 10;
+      var THRESH = 10;
+
     if (corge && foo && bar) {
-      /*for (var id in trades) {
+      for (var id in trades) {
         try {
-          cancel(id);
+          var trade = trades[id];
+          if (trade.dir == 'BUY') {
+            if (trade.price + THRESH < myBooks[trade.symbol].buy) {
+              cancel(id);
+              buy(trade.symbol, myBooks[trade.symbol].buy + DELTA, trade.size);
+            }
+          }
+          else if (trade.dir == 'SELL') {
+            if (trade.price - THRESH > myBooks[trade.symbol].sell) {
+              cancel(id);
+              sell(trade.symbol, myBooks[trade.symbol].sell - DELTA, trade.size);
+            }
+          }
         } catch(e) {}
-      }*/
+      }
 
       /*corge.buy = corge.buy.map(function(o) {return o[0];});
       foo.buy = foo.buy.map(function(o) {return o[0];});
@@ -128,17 +145,13 @@ client.on('data',function(data){
       foo.sell = foo.sell.map(function(o) {return o[0];});
       bar.sell = bar.sell.map(function(o) {return o[0];});*/
 
-      var DELTA = 2;
-      var AMOUNT = 50;
-      var WIN = 10;
+      var buy_corge = corge.buy+DELTA;
+      var buy_foo = foo.buy+DELTA;
+      var buy_bar = bar.buy+DELTA;
 
-      var buy_corge = corge.sell.min()+DELTA;
-      var buy_foo = foo.sell.min()+DELTA;
-      var buy_bar = bar.sell.min()+DELTA;
-
-      var sell_corge = corge.buy.max()-DELTA;
-      var sell_foo = foo.buy.max()-DELTA;
-      var sell_bar = bar.buy.max()-DELTA;
+      var sell_corge = corge.sell-DELTA;
+      var sell_foo = foo.sell-DELTA;
+      var sell_bar = bar.sell-DELTA;
 
       console.log(buy_corge*AMOUNT+100, (0.3*sell_foo + 0.8*sell_bar)*AMOUNT);
 
