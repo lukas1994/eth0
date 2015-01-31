@@ -16,6 +16,7 @@ var trades = {};
 var books = {};
 var portfolio = {};
 var done = false;
+var calculating = false;
 
 // Command line arguments override defaults
 if (process.argv.length == 4) {
@@ -65,7 +66,8 @@ client.on('data',function(data){
   	catch(e) {}
   }
 
-  if (pause) return;
+  if (pause || calculating) return;
+  calculating = true;
 
 
   var clone = function(obj) {
@@ -166,6 +168,7 @@ client.on('data',function(data){
         }
       //}
     } 	
+    calculating = false;
 });
 
 client.on('closed',function(){
