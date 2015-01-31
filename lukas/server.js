@@ -77,7 +77,7 @@ client.on('data',function(data){
       //books[sym].sell = books[sym].sell.map(function(o) {return o[0];});
     }
     var corge = books['CORGE'], foo = books['FOO'], bar = books['BAR'];
-  
+    console.log('before');
     if (corge && foo && bar) {
           console.log('IN');
 
