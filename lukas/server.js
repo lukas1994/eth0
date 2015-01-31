@@ -94,7 +94,7 @@ client.on('data',function(data){
   }*/
 
     var DELTA = 2;
-    var AMOUNT = 50;
+    var AMOUNT = 40;
     var WIN = 10;
     var THRESH = 50;
 
@@ -151,7 +151,7 @@ client.on('data',function(data){
           pause = true;
           setTimeout(function() {
             pause = false;
-          }, 500);
+          }, 400);
 
         }
         if (sell_corge*AMOUNT - ((0.3*buy_foo + 0.8*buy_bar)*AMOUNT+100) > WIN) {
@@ -164,7 +164,7 @@ client.on('data',function(data){
           pause = true;
           setTimeout(function() {
             pause = false;
-          }, 500);
+          }, 400);
         }
       //}
     } 	
