@@ -162,7 +162,7 @@ client.on('data',function(data){
           pause = true;
           setTimeout(function() {
             pause = false;
-          }, 500);
+          }, 100);
         }
       //}
     } 	
