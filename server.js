@@ -1,23 +1,37 @@
+var netcat = require('node-netcat')
 var c = require('./constants.js')
 var nextOrderId = 0
 
 // Command line arguments override defaults
-if (proces.argv.length == 4){
+if (process.argv.length == 4){
 	c.host = process.argv[2]
 	c.port = parseInt(process.argv[3]) + 25000
 }
 
-var client = new require('node-netcat').client(c.port, c.host)
-client.start()
-client.send({
-		"type": "hello",
-		"team": c.team
-	})
+var client = netcat.client(c.port, c.host)
+
+client.on('open', function (){
+	console.log('open')
+})
+
+client.on('error',function(error){
+
+})
+
+client.on('close',function(){
+
+})
 
 client.on('data',function(data){
 	console.log(data)
 })
 
+client.start()
+
+client.send({
+		"type": "hello",
+		"team": c.team
+	})
 
 // Return the correct JSON messages
 var buy = function(symbol, price, size){
