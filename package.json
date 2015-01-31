@@ -4,7 +4,7 @@
   "private":true,
   "dependencies": {
     "body-parser":"1.4.3",
-    "request":"*"
+    "node-netcat":"*"
   }
 }
 
