@@ -70,7 +70,7 @@ client.on('data',function(data){
     if (corge && foo && bar) {
       var buy_corge = corge.buy.min()+1;
       var buy_foo = foo.buy.min()+1;
-      var bar_foo = bar.buy.min()+1;
+      var buy_bar = bar.buy.min()+1;
 
       var sell_corge = corge.buy.max()-1;
       var sell_foo = foo.buy.max()-1;
