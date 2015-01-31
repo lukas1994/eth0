@@ -125,7 +125,7 @@ client.on('data',function(data){
       var THRESH = 10;
 
     if (corge && foo && bar) {
-      var myTrades = clone(trades);
+      /*var myTrades = clone(trades);
       console.log('COUNT: ' + Object.keys(myTrades).length);
       for (var id in myTrades) {
         try {
@@ -145,7 +145,7 @@ client.on('data',function(data){
             }
           }
         } catch(e) {}
-      }
+      }*/
 
       /*corge.buy = corge.buy.map(function(o) {return o[0];});
       foo.buy = foo.buy.map(function(o) {return o[0];});
