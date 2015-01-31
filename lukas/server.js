@@ -41,9 +41,6 @@ client.on('data',function(data){
   	try {
       var line = JSON.parse(lines[i]);
 
-      console.log(line);
-      //process.exit(0);
-
       if (line.type == 'book') {
         books[line.symbol] = line;  
       }
@@ -84,7 +81,6 @@ client.on('data',function(data){
   }
 
   // strategy
-  //console.dir(books);
   for (var sym in books) {
     /*console.log(sym);
     for (var i = 0; i < books[sym].buy; i++) {
@@ -93,8 +89,11 @@ client.on('data',function(data){
     }
     for (var i = 0; i < books[sym].sell; i++)
       books[sym].sell[i] = parseInt(books[sym].sell[i][0]);*/
+    console.log(books[sym]);
     books[sym].buy = books[sym].buy.map(function(o) {return parseInt(o[0]);});
     books[sym].sell = books[sym].sell.map(function(o) {return parseInt(o[0]);});
+    console.log(books[sym]);
+    process.exit(0);
   }
   //console.dir(books);
   var corge = books['CORGE'], foo = books['FOO'], bar = books['BAR'];
