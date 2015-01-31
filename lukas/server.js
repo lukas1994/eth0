@@ -35,7 +35,6 @@ client.on('data',function(data){
 	for (var i = 0; i < lines.length; i++){
   	try{
       var line = JSON.parse(lines[i]);
-      console.log(line);
 
       if (line.type == 'book') {
         books[line.symbol] = line;  
@@ -69,6 +68,7 @@ client.on('data',function(data){
     }
 
     // strategy
+    console.log(books);
     for (var sym in books) {
       for (var i = 0; i < books[sym].buy; i++)
         books[sym].buy[i] = books[sym].buy[i][0];
@@ -77,6 +77,7 @@ client.on('data',function(data){
       //books[sym].buy = books[sym].buy.map(function(o) {return o[0];});
       //books[sym].sell = books[sym].sell.map(function(o) {return o[0];});
     }
+    console.log(books);
     var corge = books['CORGE'], foo = books['FOO'], bar = books['BAR'];
     console.log('before');
     if (corge && foo && bar) {
