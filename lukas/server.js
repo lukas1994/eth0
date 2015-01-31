@@ -30,7 +30,7 @@ client.on('data',function(data){
   //clean trades
   for (var id in trades) {
     try {
-      if (Date.now() - trades[id].time > 5000) {
+      if (Date.now() - trades[id].time > 2000) {
         cancel(id);
       }
     } catch(e) {}
@@ -40,6 +40,9 @@ client.on('data',function(data){
 	for (var i = 0; i < lines.length; i++){
   	try {
       var line = JSON.parse(lines[i]);
+
+      console.log(line);
+      process.exit(0);
 
       if (line.type == 'book') {
         books[line.symbol] = line;  
