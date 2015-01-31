@@ -71,9 +71,9 @@ client.on('data',function(data){
     console.log(books);
     for (var sym in books) {
       for (var i = 0; i < books[sym].buy; i++)
-        books[sym].buy[i] = books[sym].buy[i][0];
+        books[sym].buy[i] = parseInt(books[sym].buy[i][0]);
       for (var i = 0; i < books[sym].sell; i++)
-        books[sym].sell[i] = books[sym].sell[i][0];
+        books[sym].sell[i] = parseInt(books[sym].sell[i][0]);
       //books[sym].buy = books[sym].buy.map(function(o) {return o[0];});
       //books[sym].sell = books[sym].sell.map(function(o) {return o[0];});
     }
