@@ -29,16 +29,6 @@ var client = new net.Socket();
 var pause = false;
 
 client.on('data',function(data){
-  console.log('now');
-  //clean trades
-  /*for (var id in trades) {
-    try {
-      if (Date.now() - trades[id].time > 2000) {
-        cancel(id);
-      }
-    } catch(e) {}
-  }*/
-
 	var lines = data.toString().split("\n");
 	for (var i = 0; i < lines.length; i++){
   	try {
@@ -67,24 +57,12 @@ client.on('data',function(data){
         delete trades[line.order_id];
       }
       else if (line.type == 'hello'){
-        /*if (!line.market_open) {
-          console.log('market closed');
-          process.exit(0);
-        }*/
         for (var i = 0; i < line.symbols; i++) {
           portfolio[line.symbols[i].symbol] = line.symbols[i].position;
         }
       }
-      else if (line.type == 'trade') {
-        //console.log("%d, %d",lines[i].price,lines[i].size)
-      }
-      else if (line.type == 'market_open') {
-
-      }
     }
-  	catch(e) {
-      console.log('caught ERROR');
-    }
+  	catch(e) {}
   }
 
   if (pause) return;
@@ -98,13 +76,6 @@ client.on('data',function(data){
 
   // strategy
   for (var sym in myBooks) {
-    /*console.log(sym);
-    for (var i = 0; i < books[sym].buy; i++) {
-      books[sym].buy[i] = parseInt(books[sym].buy[i][0]);
-      console.log(':::' + books[sym].buy[i][0]);
-    }
-    for (var i = 0; i < books[sym].sell; i++)
-      books[sym].sell[i] = parseInt(books[sym].sell[i][0]);*/
     var x = myBooks[sym].sell.map(function(o) {return o[0];}).min();
     var y = myBooks[sym].buy.map(function(o) {return o[0];}).max();
 
@@ -119,12 +90,11 @@ client.on('data',function(data){
   /*if (portfolio['CORGE'] > 500) {
     sell('CORGE', buy_corge, AMOUNT);
   }*/
-  if(true) {
 
     var DELTA = 0;
-      var AMOUNT = 50;
-      var WIN = 10;
-      var THRESH = 25;
+    var AMOUNT = 50;
+    var WIN = 10;
+    var THRESH = 25;
 
     if (corge && foo && bar) {
       var myTrades = clone(trades);
@@ -132,17 +102,18 @@ client.on('data',function(data){
       for (var id in myTrades) {
         try {
           var trade = myTrades[id];
+          if (trade.invalid) continue;
           if (trade.dir == 'BUY') {
             if (trade.price + THRESH < myBooks[trade.symbol].buy) {
               cancel(id);
-              delete trades[id];
+              trades[id].invalid = true;
               buy(trade.symbol, myBooks[trade.symbol].buy + DELTA, trade.size);
             }
           }
           else if (trade.dir == 'SELL') {
             if (trade.price - THRESH > myBooks[trade.symbol].sell) {
               cancel(id);
-              delete trades[id];
+              trades[id].invalid = true;
               sell(trade.symbol, myBooks[trade.symbol].sell - DELTA, trade.size);
             }
           }
@@ -194,9 +165,7 @@ client.on('data',function(data){
           }, 500);
         }
       //}
-    } 
-  }
-	
+    } 	
 });
 
 client.on('closed',function(){
