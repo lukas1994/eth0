@@ -68,16 +68,19 @@ client.on('data',function(data){
         delete trades[line.order_id];
       }
       else if (line.type == 'hello'){
-        if (!line.market_open) {
+        /*if (!line.market_open) {
           console.log('market closed');
           process.exit(0);
-        }
+        }*/
         for (var i = 0; i < line.symbols; i++) {
           portfolio[line.symbols[i].symbol] = line.symbols[i].position;
         }
       }
       else if (line.type == 'trade') {
         //console.log("%d, %d",lines[i].price,lines[i].size)
+      }
+      else if (line.type == 'market_open') {
+
       }
     }
   	catch(e) {
@@ -122,7 +125,7 @@ client.on('data',function(data){
       var THRESH = 10;
 
     if (corge && foo && bar) {
-      /*console.log('COUNT: ' + trades.length);
+      console.log('COUNT: ' + trades.length);
       for (var id in trades) {
         try {
           var trade = trades[id];
@@ -139,7 +142,7 @@ client.on('data',function(data){
             }
           }
         } catch(e) {}
-      }*/
+      }
 
       /*corge.buy = corge.buy.map(function(o) {return o[0];});
       foo.buy = foo.buy.map(function(o) {return o[0];});
