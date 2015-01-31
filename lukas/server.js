@@ -41,6 +41,7 @@ client.on('data',function(data){
       }
       else if (line.type == 'ack') {
         trades[line.order_id].status = 'ack';
+        console.log('ack');
       }
       else if (line.type == 'reject') {
         console.log('REJECT: ' + line.error);
