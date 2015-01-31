@@ -14,6 +14,7 @@ Array.prototype.min = function() {
 
 var trades = {};
 var books = {};
+var portfolio = {};
 
 // Command line arguments override defaults
 if (process.argv.length == 4) {
@@ -52,6 +53,10 @@ client.on('data',function(data){
       }
       else if (line.type == 'fill') {
         trades[line.order_id].size -= line.size;
+        if (line.dir == 'BUY')
+          portfolio[line.symbol] += line.size;
+        else
+          portfolio[line.symbol] -= line.size;
       }
       else if (line.type == 'out') {
         trades[line.order_id] = undefined;
@@ -60,6 +65,9 @@ client.on('data',function(data){
         if (!line.market_open) {
           console.log('market closed');
           process.exit(0);
+        }
+        for (var i = 0; i < line.symbols; i++) {
+          portfolio[line.symbols[i].symbol] = line.symbols[i].position;
         }
       }
       else if (line.type == 'trade') {
@@ -109,17 +117,19 @@ client.on('data',function(data){
     var DELTA = 1;
     var AMOUNT = 100;
 
-    console.log(buy_corge, (0.3*sell_foo + 0.7*sell_bar));
+    console.log(buy_corge, (0.3*sell_foo + 0.8*sell_bar));
 
-    if (buy_corge < (0.3*sell_foo + 0.7*sell_bar)) {
-      buy('CORGE', buy_corge, AMOUNT);
+    if (buy_corge+100 < (0.3*sell_foo + 0.8*sell_bar)) {
+      convert('BUY', AMOUNT);
+      /*buy('CORGE', buy_corge, AMOUNT);
       sell('FOO', sell_foo, Math.floor(0.3*AMOUNT));
-      sell('BAR', sell_bar, Math.floor(0.7*AMOUNT));
+      sell('BAR', sell_bar, Math.floor(0.8*AMOUNT));*/
     }
-    if ((0.3*buy_foo + 0.7*buy_bar) < sell_corge) {
-      sell('CORGE', buy_corge, AMOUNT);
+    if ((0.3*buy_foo + 0.8*buy_bar + 100) < sell_corge) {
+      convert('SELL', AMOUNT);
+      /*sell('CORGE', buy_corge, AMOUNT);
       buy('FOO', sell_foo, Math.floor(0.3*AMOUNT));
-      buy('BAR', sell_bar, Math.floor(0.7*AMOUNT));
+      buy('BAR', sell_bar, Math.floor(0.8*AMOUNT));*/
     }
   }
 
@@ -176,6 +186,16 @@ var add = function(direction, symbol, price, size){
 			"size": size
 		});
 };
+
+var convert = function(dir, size) {
+  return execute({
+    "type": "convert",
+    "order_id": nextOrderId++,
+    "symbol": "CORGE",
+    "dir": dir,
+    "size": size
+  });
+});
 
 var cancel = function(orderID){
 	return execute({
