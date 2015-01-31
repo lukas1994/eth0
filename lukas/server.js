@@ -42,7 +42,7 @@ client.on('data',function(data){
       var line = JSON.parse(lines[i]);
 
       console.log(line);
-      process.exit(0);
+      //process.exit(0);
 
       if (line.type == 'book') {
         books[line.symbol] = line;  
