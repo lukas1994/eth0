@@ -125,10 +125,11 @@ client.on('data',function(data){
       var THRESH = 10;
 
     if (corge && foo && bar) {
-      console.log('COUNT: ' + trades.length);
-      for (var id in trades) {
+      var myTrades = clone(trades);
+      console.log('COUNT: ' + Object.keys(myTrades).length);
+      for (var id in myTrades) {
         try {
-          var trade = trades[id];
+          var trade = myTrades[id];
           if (trade.dir == 'BUY') {
             if (trade.price + THRESH < myBooks[trade.symbol].buy) {
               cancel(id);
