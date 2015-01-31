@@ -120,13 +120,13 @@ client.on('data',function(data){
 
     console.log(buy_corge, (0.3*sell_foo + 0.8*sell_bar));
 
-    if (buy_corge+100 < (0.3*sell_foo + 0.8*sell_bar)) {
+    if (buy_corge < (0.3*sell_foo + 0.8*sell_bar)) {
       //convert('SELL', AMOUNT);
       buy('CORGE', buy_corge, AMOUNT);
       sell('FOO', sell_foo, Math.floor(0.3*AMOUNT));
       sell('BAR', sell_bar, Math.floor(0.8*AMOUNT));
     }
-    if ((0.3*buy_foo + 0.8*buy_bar + 100) < sell_corge) {
+    if ((0.3*buy_foo + 0.8*buy_bar) < sell_corge) {
       //convert('BUY', AMOUNT);
       sell('CORGE', buy_corge, AMOUNT);
       buy('FOO', sell_foo, Math.floor(0.3*AMOUNT));
@@ -199,6 +199,7 @@ var convert = function(dir, size) {
 };
 
 var cancel = function(orderID){
+  console.log('CANCEL');
 	return execute({
 		"type": "cancel",
 		"order_id": orderID
