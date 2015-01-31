@@ -142,6 +142,8 @@ client.on('data',function(data){
     }
   }
 
+  convert('BUY', 1000);
+
 	
 });
 
