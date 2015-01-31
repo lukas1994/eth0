@@ -1,7 +1,10 @@
-'use strict';
-
 var request = require('request');
 
-request('http://google.com', function(err, res, body) {
-		console.log(res);
-});
+request({
+	uri: 'http://54.171.127.72:25000',
+	method: 'POST',
+	json: {"type": "hello", "team": "LGP"},
+	callback: function(err, res, body) {
+		console.log(res)
+	}
+})
