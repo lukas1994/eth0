@@ -122,6 +122,7 @@ client.on('data',function(data){
       var THRESH = 10;
 
     if (corge && foo && bar) {
+      /*console.log('COUNT: ' + trades.length);
       for (var id in trades) {
         try {
           var trade = trades[id];
@@ -138,7 +139,7 @@ client.on('data',function(data){
             }
           }
         } catch(e) {}
-      }
+      }*/
 
       /*corge.buy = corge.buy.map(function(o) {return o[0];});
       foo.buy = foo.buy.map(function(o) {return o[0];});
