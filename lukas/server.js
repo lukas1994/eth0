@@ -62,6 +62,7 @@ client.on('data',function(data){
       else if (line.type == 'trade') {
         //console.log("%d, %d",lines[i].price,lines[i].size)
       }
+    }
   	catch(e){
       console.log('caught ERROR');
     }
