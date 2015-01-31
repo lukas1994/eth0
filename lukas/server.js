@@ -74,7 +74,7 @@ client.on('data',function(data){
 
       var sell_corge = corge.buy.max()-1;
       var sell_foo = foo.buy.max()-1;
-      var sell_foo = bar.buy.max()-1;
+      var sell_bar = bar.buy.max()-1;
 
       var DELTA = 1;
       var AMOUNT = 100;
