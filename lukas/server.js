@@ -80,8 +80,14 @@ client.on('data',function(data){
     }
   }
 
+  var clone = function(obj) {
+    return JSON.parse(JSON.stringify(obj));
+  };
+
+  var myBooks = clone(books);
+
   // strategy
-  for (var sym in books) {
+  for (var sym in myBooks) {
     /*console.log(sym);
     for (var i = 0; i < books[sym].buy; i++) {
       books[sym].buy[i] = parseInt(books[sym].buy[i][0]);
@@ -89,11 +95,11 @@ client.on('data',function(data){
     }
     for (var i = 0; i < books[sym].sell; i++)
       books[sym].sell[i] = parseInt(books[sym].sell[i][0]);*/
-    books[sym].buy = books[sym].buy.map(function(o) {return o[0];});
-    books[sym].sell = books[sym].sell.map(function(o) {return o[0];});
+    myBooks[sym].buy = myBooks[sym].buy.map(function(o) {return o[0];});
+    myBooks[sym].sell = myBooks[sym].sell.map(function(o) {return o[0];});
   }
   //console.dir(books);
-  var corge = books['CORGE'], foo = books['FOO'], bar = books['BAR'];
+  var corge = myBooks['CORGE'], foo = myBooks['FOO'], bar = myBooks['BAR'];
   console.log('before');
   if (corge && foo && bar) {
         console.log('IN');
