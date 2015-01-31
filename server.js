@@ -1,7 +1,7 @@
 'use strict';
 
-var http = require('http');
+var request = require('request');
 
-http.request('', function(res) {
-
+request('http://google.com', function(err, res, body) {
+		console.log(res);
 });
