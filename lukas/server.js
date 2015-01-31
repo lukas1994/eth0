@@ -100,10 +100,11 @@ client.on('data',function(data){
     }
     for (var i = 0; i < books[sym].sell; i++)
       books[sym].sell[i] = parseInt(books[sym].sell[i][0]);*/
-    if (typeof myBooks[sym].sell == 'object')
-      myBooks[sym].buy = myBooks[sym].sell.map(function(o) {return o[0];}).min();
-    if (typeof myBooks[sym].buy == 'object')
-      myBooks[sym].sell = myBooks[sym].buy.map(function(o) {return o[0];}).max();
+    var x = myBooks[sym].sell.map(function(o) {return o[0];}).min();
+    var y = myBooks[sym].buy.map(function(o) {return o[0];}).max();
+
+    myBooks[sym].buy = x;
+    myBooks[sym].sell = y;
   }
   //console.dir(books);
   var corge = myBooks['CORGE'], foo = myBooks['FOO'], bar = myBooks['BAR'];
