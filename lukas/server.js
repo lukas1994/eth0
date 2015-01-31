@@ -59,7 +59,7 @@ client.on('data',function(data){
           process.exit(0);
         }
       }
-      else if (line.type == 'trade')
+      else if (line.type == 'trade') {
         //console.log("%d, %d",lines[i].price,lines[i].size)
       }
   	catch(e){
