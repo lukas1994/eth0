@@ -35,6 +35,7 @@ client.on('data',function(data){
 	for (var i = 0; i < lines.length; i++){
   	try{
       var line = JSON.parse(lines[i]);
+      console.log(line);
 
       if (line.type == 'book') {
         books[line.symbol] = line;  
