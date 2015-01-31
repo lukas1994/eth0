@@ -121,10 +121,10 @@ client.on('data',function(data){
   }*/
   if(true) {
 
-    var DELTA = 2;
+    var DELTA = 0;
       var AMOUNT = 50;
       var WIN = 10;
-      var THRESH = 10;
+      var THRESH = 5;
 
     if (corge && foo && bar) {
       var myTrades = clone(trades);
