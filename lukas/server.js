@@ -91,10 +91,10 @@ client.on('data',function(data){
     sell('CORGE', buy_corge, AMOUNT);
   }*/
 
-    var DELTA = 0;
-    var AMOUNT = 50;
-    var WIN = 10;
-    var THRESH = 100;
+    var DELTA = 2;
+    var AMOUNT = 60;
+    var WIN = 15;
+    var THRESH = 20;
 
     if (corge && foo && bar) {
       var myTrades = clone(trades);
@@ -149,7 +149,7 @@ client.on('data',function(data){
           pause = true;
           setTimeout(function() {
             pause = false;
-          }, 100);
+          }, 500);
 
         }
         if (sell_corge*AMOUNT - ((0.3*buy_foo + 0.8*buy_bar)*AMOUNT+100) > WIN) {
@@ -162,7 +162,7 @@ client.on('data',function(data){
           pause = true;
           setTimeout(function() {
             pause = false;
-          }, 100);
+          }, 500);
         }
       //}
     } 	
