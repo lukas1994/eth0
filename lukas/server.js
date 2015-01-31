@@ -157,7 +157,7 @@ client.on('data',function(data){
           }, 1000);
 
         }
-        if ((sell_corge*AMOUNT - ((0.3*buy_foo + 0.8*buy_bar)*AMOUNT+100) > WIN) {
+        if (sell_corge*AMOUNT - ((0.3*buy_foo + 0.8*buy_bar)*AMOUNT+100) > WIN) {
           convert('BUY', AMOUNT);
 
           sell('CORGE', sell_corge, AMOUNT);
