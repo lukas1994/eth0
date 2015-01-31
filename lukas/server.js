@@ -101,9 +101,7 @@ client.on('data',function(data){
   }
   //console.dir(books);
   var corge = myBooks['CORGE'], foo = myBooks['FOO'], bar = myBooks['BAR'];
-  console.log('before');
   if (corge && foo && bar) {
-        console.log('IN');
 
     /*corge.buy = corge.buy.map(function(o) {return o[0];});
     foo.buy = foo.buy.map(function(o) {return o[0];});
@@ -113,16 +111,18 @@ client.on('data',function(data){
     foo.sell = foo.sell.map(function(o) {return o[0];});
     bar.sell = bar.sell.map(function(o) {return o[0];});*/
 
-    var buy_corge = corge.sell.min()+1;
-    var buy_foo = foo.sell.min()+1;
-    var buy_bar = bar.sell.min()+1;
+    var buy_corge = corge.sell.min()+10;
+    var buy_foo = foo.sell.min()+10;
+    var buy_bar = bar.sell.min()+10;
 
-    var sell_corge = corge.buy.max()-1;
-    var sell_foo = foo.buy.max()-1;
-    var sell_bar = bar.buy.max()-1;
+    var sell_corge = corge.buy.max()-10;
+    var sell_foo = foo.buy.max()-10;
+    var sell_bar = bar.buy.max()-10;
 
     var DELTA = 1;
     var AMOUNT = 100;
+
+    console.log(buy_corge+100, (0.3*sell_foo + 0.8*sell_bar));
 
     //if (!done) {
       if (buy_corge+100 < (0.3*sell_foo + 0.8*sell_bar)) {
