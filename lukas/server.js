@@ -122,10 +122,10 @@ client.on('data',function(data){
     var DELTA = 1;
     var AMOUNT = 100;
 
-    console.log(buy_corge+100, (0.3*sell_foo + 0.8*sell_bar));
+    console.log(buy_corge*AMOUNT+100, (0.3*sell_foo + 0.8*sell_bar)*AMOUNT);
 
     //if (!done) {
-      if (buy_corge+100 < (0.3*sell_foo + 0.8*sell_bar)) {
+      if (buy_corge*AMOUNT+100 < (0.3*sell_foo + 0.8*sell_bar)*AMOUNT) {
         convert('SELL', AMOUNT);
 
         buy('CORGE', buy_corge, AMOUNT);
@@ -134,7 +134,7 @@ client.on('data',function(data){
 
         done = true;
       }
-      if ((0.3*buy_foo + 0.8*buy_bar)+100 < sell_corge) {
+      if ((0.3*buy_foo + 0.8*buy_bar)*AMOUNT+100 < sell_corge*AMOUNT) {
         convert('BUY', AMOUNT);
 
         sell('CORGE', buy_corge, AMOUNT);
