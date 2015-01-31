@@ -62,7 +62,7 @@ client.on('data',function(data){
       }
       else if (line.type == 'out') {
         console.log('OUT');
-        trades[line.order_id] = undefined;
+        delete trades[line.order_id];
       }
       else if (line.type == 'hello'){
         if (!line.market_open) {
