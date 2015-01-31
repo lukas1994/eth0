@@ -96,7 +96,7 @@ client.on('data',function(data){
     var DELTA = 2;
     var AMOUNT = 60;
     var WIN = 15;
-    var THRESH = 25;
+    var THRESH = 35;
 
     if (corge && foo && bar) {
       var myTrades = clone(trades);
