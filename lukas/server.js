@@ -195,7 +195,7 @@ var convert = function(dir, size) {
     "dir": dir,
     "size": size
   });
-});
+};
 
 var cancel = function(orderID){
 	return execute({
