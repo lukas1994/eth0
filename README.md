@@ -1,1 +1,1 @@
-# eth0
+# stock trading hackathon (Oxford, 2015)
